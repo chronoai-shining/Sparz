@@ -27,7 +27,7 @@ npm test
 
 Playwright uses one worker and runs desktop and mobile tests against the production server. Coverage includes source-content preservation, media, language persistence, service filters, keyboard-operated FAQs, testimonials, form validation, reduced motion, mobile navigation, narrow layouts, legacy URLs, and JavaScript-disabled access.
 
-Validated on October 27, 2026: production build succeeds; all 20 desktop/mobile browser tests pass, including automated WCAG A/AA checks on expanded English and Chinese content. Automated checks are not a complete accessibility certification. Previews are saved in `docs/previews/`. Docker is not installed in this workspace, so the container build and deployment remain unverified until the GitHub workflow runs.
+Validated on October 27, 2026: production build succeeds; all 20 desktop/mobile browser tests pass locally and in GitHub Actions, including automated WCAG A/AA checks on expanded English and Chinese content. Automated checks are not a complete accessibility certification. Previews are saved in `docs/previews/`. GitHub Actions also successfully built and published the non-root container image.
 
 ## Content and functionality
 
@@ -48,17 +48,17 @@ The source’s visible testimonial attribution (`Stefan Lin`; `Founder, GUNKEE C
 
 The repository `chronoai-shining/Sparz` was initially private and is now public at the owner's request. Source publication uses GitHub APIs with the observed parent commit and non-forced ref updates; existing local worktree metadata is preserved.
 
-The existing GHCR container package remains private independently of the repository. Until private-registry credentials are configured, its owner must change the `sparz` package's visibility in GitHub's package settings before ChronoCD can pull it anonymously. GitHub warns that a public package cannot be made private again. Repository visibility alone did not resolve the deployment's `image_unauthorized` error.
+The owner also made the GHCR container package public, and ChronoCD successfully pulled it. Package visibility is separate from repository visibility; changing the repository alone did not resolve the original `image_unauthorized` error. No private registry credential is required for this public image.
 
-`.github/workflows/publish.yml` tests changes and, on the repository’s default branch, publishes a non-root container to `ghcr.io/<owner>/sparz:<commit-sha>`. It uses GitHub’s job token; no stored third-party secret is needed for publishing. The job summary records the immutable image digest. The container build itself must be confirmed by a successful workflow or local Docker build before deployment.
+`.github/workflows/publish.yml` tests changes and, on the repository’s default branch, publishes a non-root container to `ghcr.io/<owner>/sparz:<commit-sha>`. It uses GitHub’s job token; no stored third-party secret is needed for publishing. The job summary records the immutable image digest. Verify each future container build before deploying it.
 
-`deploy/chrono-cd.example.json` is a template, not an applied deployment. Replace its image with the verified image digest, then apply through the authenticated NyxID CLI:
+`deploy/chrono-cd.json` records the applied spec with its immutable image digest. `deploy/chrono-cd.example.json` is a template for future builds. Inspect the current app before applying through the authenticated NyxID CLI:
 
 ```sh
 nyxid proxy request chrono-cd api/v1/account --output json
 nyxid proxy request chrono-cd api/v1/projects/sparz/apps/sparz --output json
 nyxid proxy request chrono-cd api/v1/projects/sparz/apps/sparz \
-  --method PUT --data "$(cat /path/to/resolved-spec.json)" --output json
+  --method PUT --data "$(cat deploy/chrono-cd.json)" --output json
 ```
 
 The product display name is **Sparz**; ChronoCD requires lowercase project/app identifiers, so both are `sparz`. Inspect existing app state before applying; a PUT replaces the complete spec. Use the observed generation with `If-Match` when updating an existing app. A private GHCR image may require the connected GitHub account’s package-read scope. Never paste registry credentials into files or chat.

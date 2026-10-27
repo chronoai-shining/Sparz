@@ -1,0 +1,18 @@
+{
+  "services": {
+    "sparz-web": {
+      "image": "ghcr.io/chronoai-shining/sparz@sha256:4df525fa9b4c30a7bd30df1738d3f1b567a02e5102d1f91df5f318ec6a45ac23",
+      "port": 8080,
+      "routes": ["/"],
+      "health_path": "/health",
+      "replicas": 1,
+      "resources": {
+        "cpu_request": "50m",
+        "memory_request": "64Mi",
+        "cpu_limit": "500m",
+        "memory_limit": "256Mi"
+      },
+      "egress": "none"
+    }
+  }
+}
