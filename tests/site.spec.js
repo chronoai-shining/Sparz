@@ -126,6 +126,10 @@ test('expanded English and Chinese content passes automated accessibility checks
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(results.violations).toEqual([]);
   }
+  await page.locator('#cases').scrollIntoViewIfNeeded();
+  await expect(page.locator('#main-nav a[href="#cases"]')).toHaveAttribute('aria-current', 'location');
+  const scrolledResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(scrolledResults.violations).toEqual([]);
 });
 
 test('unavailable source pages explain their status without fabricated content', async ({ page }) => {
