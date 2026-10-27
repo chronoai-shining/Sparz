@@ -46,7 +46,9 @@ The source’s visible testimonial attribution (`Stefan Lin`; `Founder, GUNKEE C
 
 ## GitHub and ChronoCD
 
-The owner confirmed the private repository `chronoai-shining/Sparz`. Source publication uses GitHub APIs with the observed parent commit and non-forced ref updates; existing local worktree metadata is preserved.
+The repository `chronoai-shining/Sparz` was initially private and is now public at the owner's request. Source publication uses GitHub APIs with the observed parent commit and non-forced ref updates; existing local worktree metadata is preserved.
+
+The existing GHCR container package remains private independently of the repository. Until private-registry credentials are configured, its owner must change the `sparz` package's visibility in GitHub's package settings before ChronoCD can pull it anonymously. GitHub warns that a public package cannot be made private again. Repository visibility alone did not resolve the deployment's `image_unauthorized` error.
 
 `.github/workflows/publish.yml` tests changes and, on the repository’s default branch, publishes a non-root container to `ghcr.io/<owner>/sparz:<commit-sha>`. It uses GitHub’s job token; no stored third-party secret is needed for publishing. The job summary records the immutable image digest. The container build itself must be confirmed by a successful workflow or local Docker build before deployment.
 
