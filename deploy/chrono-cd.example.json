@@ -1,0 +1,18 @@
+{
+  "services": {
+    "sparz-web": {
+      "image": "ghcr.io/chronoai-shining/sparz:COMMIT_SHA",
+      "port": 8080,
+      "routes": ["/"],
+      "health_path": "/health",
+      "replicas": 1,
+      "resources": {
+        "cpu_request": "50m",
+        "memory_request": "64Mi",
+        "cpu_limit": "500m",
+        "memory_limit": "256Mi"
+      },
+      "egress": "none"
+    }
+  }
+}
