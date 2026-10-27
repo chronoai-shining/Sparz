@@ -1,9 +1,10 @@
 {
   "services": {
     "sparz-web": {
-      "image": "ghcr.io/chronoai-shining/sparz@sha256:4df525fa9b4c30a7bd30df1738d3f1b567a02e5102d1f91df5f318ec6a45ac23",
+      "image": "ghcr.io/chronoai-shining/sparz@sha256:1f3b99fcb29f09ceea4a2400453479f181c9d7faf72b63290e1669f012d2dcec",
       "port": 8080,
       "routes": ["/"],
+      "expose": "public",
       "health_path": "/health",
       "replicas": 1,
       "resources": {

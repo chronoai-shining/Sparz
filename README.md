@@ -2,6 +2,8 @@
 
 A redesigned, bilingual company website for Sparz. Spacious typography, an original animated spark, restrained colors, clear service discovery, and responsive layouts replace the original dense presentation.
 
+Live site: **https://sparz-c1ddd1707b.apps.nyxid.ai**. The existing `sparzmkt.com` domain and hosting are unchanged. Deployment provenance and operational checks are recorded in `docs/deployment.md`.
+
 ## Run locally
 
 Requires Node.js 24 and npm.
@@ -27,7 +29,7 @@ npm test
 
 Playwright uses one worker and runs desktop and mobile tests against the production server. Coverage includes source-content preservation, media, language persistence, service filters, keyboard-operated FAQs, testimonials, form validation, reduced motion, mobile navigation, narrow layouts, legacy URLs, and JavaScript-disabled access.
 
-Validated on October 27, 2026: production build succeeds; all 20 desktop/mobile browser tests pass locally and in GitHub Actions, including automated WCAG A/AA checks on expanded English and Chinese content. Automated checks are not a complete accessibility certification. Previews are saved in `docs/previews/`. GitHub Actions also successfully built and published the non-root container image.
+Validated on October 27, 2026: production build succeeds; all 20 desktop/mobile browser tests pass locally and in GitHub Actions, including automated WCAG A/AA checks on expanded English and Chinese content. The regression suite also checks the active navigation after scrolling. Automated checks are not a complete accessibility certification. Previews are saved in `docs/previews/`. GitHub Actions also successfully built and published the non-root container image.
 
 ## Content and functionality
 
